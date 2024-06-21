@@ -8,7 +8,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.get("/home", (req,res) => {
+app.get("/", (req,res) => {
     res.status(200).render("home");
 });
 
