@@ -20,18 +20,41 @@
                 })
             }
         }
+        function editaCliente(cliId){
+
+        }
     </script>
     <title>Cliente</title>
 </head>
 <body>
     <%- include("partials/header") %>
-    <h1>Cliente</h1>
-    <ul>
-        <% clientes.forEach(cliente => { %>
-            <li>Cliente: <%- cliente.nome %> endereço: <%- cliente.endereco %> 
-                <button class="btn btn-danger mt-2 w-1 h-1" onclick="deletaCliente(<%= cliente.id %>)">EXCLUIR CLIENTE</button>
-            </li>
-        <% }); %>
-    </ul>
+    <div class="container">
+        <h1>Cliente</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome Cliente</th>
+                    <th>Endereço de propriedade</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% clientes.forEach(cliente => { %>
+                    <tr>
+                        <td><%- cliente.nome %></td>
+                        <td><%- cliente.endereco %></td>
+                        <td><%- cliente.email %></td>
+                        <td><%- cliente.tel %></td>
+                        <td>
+                    <button class="btn btn-primary" onclick="window.location.href='/editarCliente/<%= cliente.id %>'">EDITAR CLIENTE</button>
+                            <button class="btn btn-danger" onclick="deletaCliente(<%= cliente.id %>)">EXCLUIR CLIENTE</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
