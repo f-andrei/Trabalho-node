@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Imoveis</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <h1>PROPRIEDADE</h1>
+    <div>
+        <form action="">
+            <div>
+                <label class="form-label" for="cliente_id">Cliente</label>
+                <select class="form-control" name="cliente_id" id="cliente_id">
+                    <option value="1">Cliente 1</option>
+                    <option value="2">Cliente 2</option>
+                    <option value="3">Cliente 3</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label" for="corretor_id">Corretor</label>
+                <select class="form-control" name="corretor_id" id="corretor_id">
+                    <option value="1">Corretor 1</option>
+                    <option value="2">Corretor 2</option>
+                    <option value="3">Corretor 3</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label" for="forma_pagamento">Forma de pagamento</label>
+                <select class="form-control" name="forma_pagamento" id="forma_pagamento">
+                    <option value="1">A vista</option>
+                    <option value="2">Financiamento</option>
+                    <option value="3">Parcelamento</option>
+                </select>
+            </div>
+            <! -- checar forma de pagamento -->
+        </form>
+    </div>
+</body>
+</html>
