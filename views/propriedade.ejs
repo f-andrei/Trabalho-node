@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <% include('partials/header') %>
+    <%- include("partials/header") %>
     
     <div class="container mt-4">
         <h1 class="mb-4">Propriedades Cadastradas</h1>
@@ -29,6 +29,10 @@
                             <strong>Tipo:</strong> <%= propriedade.Tipo %><br>
                             <strong>Área (m²):</strong> <%= propriedade.Area_m2 %><br>
                             <strong>Disponibilidade:</strong> <%= propriedade.Disponibilidade %><br>
+                            
+                            <form action="/deletarPropriedade/<%= propriedade.Id %>" method="POST" class="mt-2">
+                                <button type="submit" class="btn btn-danger">Deletar</button>
+                            </form>
                         </li>
                     <% }); %>
                 </ul>
