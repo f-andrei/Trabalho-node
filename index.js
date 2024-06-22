@@ -35,14 +35,18 @@ app.get("/corretor", (req,res) => {
     
 });
 
-app.get("/anunciar-imovel", (req,res) => {
+app.get("/corretor/cadastraCorretor", (req,res) => {
+    res.status(200).render("cadastraCorretor");
+});
+
+app.get("/propriedade", (req,res) => {
     res.status(200).render("propriedade");
 });
 
 app.post('/cadastroCli', (req,res) => {
-    const {nome,sobrenome,email,endereco,cidade, estado,cep} = req.body;
-    const cliente = {nome,sobrenome,email,endereco,cidade, estado,cep};
-    const query = connecta.query("INSERT INTO clientes SET ? ", cliente, (err) => {
+    let {nome,sobrenome,email,endereco,cidade, estado,cep} = req.body;
+    let cliente = {nome,sobrenome,email,endereco,cidade, estado,cep};
+    let query = connecta.query("INSERT INTO clientes SET ? ", cliente, (err) => {
         if(err){
             console.error("erro ao inserir na tebela clientes " + err);
             res.status(500).send("Erro");
@@ -78,4 +82,21 @@ app.put("/cliente/:id", (req,res) => {
 
 app.listen(3000, () => {
     console.log("Servidor executado na porta 3000");
+});
+
+
+
+
+app.post('/corretor/cadastroCorretor', (req,res) => {
+    let {nome,email, cpf, telefone, localidade} = req.body;
+    let corretor = {nome,email, cpf, telefone, localidade};
+    let query = connecta.query("INSERT INTO corretor SET ? ", corretor, (err) => {
+        if(err){
+            console.error("erro ao inserir na tebela corretor " + err);
+            res.status(500).send("Erro");
+        }
+        console.log("Corretor inserido no banco de dados");
+    })
+    console.log("Corretor inserido no banco de dados");
+    res.status(202).redirect("/corretor");
 });
