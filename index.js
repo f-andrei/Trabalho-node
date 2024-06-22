@@ -57,7 +57,7 @@ app.delete("/cliente/:id", (req, res) => {
     const cliId = req.params.id;
     const query = connecta.query("DELETE FROM clientes WHERE id = ?", [cliId], (err, result) => {
         if (err) {
-            console.error("Erro ao excluir na tabela clientes " + err);
+            console.error("Erro ao excluir na tabela clientes: " + err);
             res.status(500).send("Erro");
             return;
         }
@@ -66,10 +66,9 @@ app.delete("/cliente/:id", (req, res) => {
             return;
         }
         console.log("Cliente excluído");
-        res.redirect("/cliente");
+        res.status(200).send("Cliente excluído");
     });
 });
-
 app.put("/cliente/:id", (req,res) => {
     const cliId = req.params.id;
     console.log("atualizando cliente com id " + cliId);

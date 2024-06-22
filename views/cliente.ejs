@@ -6,20 +6,32 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script>
         function deletaCliente(cliId){
-            if(confirm("Certeza que gostaria de excluir um cliente do sistema? essa operação é irreversivel ")){
-                
+            if(confirm("Certeza que gostaria de excluir um cliente do sistema? essa operação é irreversível?")){
+                fetch(`/cliente/${cliId}`, {
+                    method: "DELETE"
+                })
+                .then(response => {
+                    if(response.ok){
+                        alert("Cliente removido com sucesso!");
+                        location.reload();
+                    } else {
+                        alert("Erro ao remover cliente!");
+                    }
+                })
             }
         }
     </script>
-    <title>cliente</title>
+    <title>Cliente</title>
 </head>
 <body>
     <%- include("partials/header") %>
-    <h1>cliente</h1>
+    <h1>Cliente</h1>
     <ul>
-        <% clientes.forEach(cliente => {  %>
-            <li>nome: <%- cliente.nome %> endereço: <%- cliente.endereco %> - <button class="btn btn-danger mt-2 w-1 h-1" onclick="deletaCliente(<%- cliente.cliId %>)">EXCLUIR CLIENTE </button></li>
-            <% }); %>
+        <% clientes.forEach(cliente => { %>
+            <li>Cliente: <%- cliente.nome %> endereço: <%- cliente.endereco %> 
+                <button class="btn btn-danger mt-2 w-1 h-1" onclick="deletaCliente(<%= cliente.id %>)">EXCLUIR CLIENTE</button>
+            </li>
+        <% }); %>
     </ul>
 </body>
 </html>
