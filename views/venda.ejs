@@ -7,36 +7,62 @@
     <title>Imoveis</title>
 </head>
 <body>
-    <%- include('partials/header') %>
-    <h1>PROPRIEDADE</h1>
-    <div>
-        <form action="">
-            <div>
-                <label class="form-label" for="cliente_id">Cliente</label>
-                <select class="form-control" name="cliente_id" id="cliente_id">
-                    <option value="1">Cliente 1</option>
-                    <option value="2">Cliente 2</option>
-                    <option value="3">Cliente 3</option>
-                </select>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <%- include('partials/header') %>
+                <h2>Realizar venda</h2>
             </div>
-            <div>
-                <label class="form-label" for="corretor_id">Corretor</label>
-                <select class="form-control" name="corretor_id" id="corretor_id">
-                    <option value="1">Corretor 1</option>
-                    <option value="2">Corretor 2</option>
-                    <option value="3">Corretor 3</option>
-                </select>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form action="venda" method="post">
+                    <div>
+                        <label class="form-label" for="cliente_id">Cliente</label>
+                        <select class="form-control" name="cliente_id" id="cliente_id">
+                            <% clientes.forEach(cliente => { %>
+                                <option value="<%= cliente.id %>"><%= cliente.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="corretor_id">Corretor</label>
+                        <select class="form-control" name="corretor_id" id="corretor_id">
+                            <% corretores.forEach(corretor => { %>
+                                <option value="<%= corretor.id %>"><%= corretor.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="propriedade_id">Propriedade</label>
+                        <select class="form-control" name="propriedade_id" id="propriedade_id">
+                            <% propriedades.forEach(propriedade => { %>
+                                <option value="<%= propriedade.id %>">Rua <%= propriedade.rua %>, Nº <%= propriedade.numero %>, <%= propriedade.bairro %> - tipo: <%= propriedade.tipo %> | Cliente: <%= propriedade.nome %> <%= propriedade.sobrenome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="valor" >Valor</label>
+                        <input class="form-control" type="number" name="valor" id="valor">
+                    </div>
+                    <div>
+                        <label class="form-label" for="forma_pagamento">Forma de pagamento</label>
+                        <select class="form-control" name="forma_pagamento" id="forma_pagamento">
+                            <option value="a vista">A vista</option>
+                            <option value="financiamento">Financiamento</option>
+                            <option value="parcelamento">Parcelamento</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="qtd_parcelas" >Parcelas</label>
+                        <input class="form-control" type="number" name="qtd_parcelas" id="qtd_parcelas">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary mt-3" type="submit">Realizar venda</button>
+                    </div>
+                </form>
             </div>
-            <div>
-                <label class="form-label" for="forma_pagamento">Forma de pagamento</label>
-                <select class="form-control" name="forma_pagamento" id="forma_pagamento">
-                    <option value="1">A vista</option>
-                    <option value="2">Financiamento</option>
-                    <option value="3">Parcelamento</option>
-                </select>
-            </div>
-            <! -- checar forma de pagamento -->
-        </form>
+        </div>
     </div>
 </body>
 </html>
