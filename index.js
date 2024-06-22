@@ -35,9 +35,39 @@ app.get("/corretor", (req,res) => {
     
 });
 
-app.get("/anunciar-imovel", (req,res) => {
-    res.status(200).render("propriedade");
+
+app.get('/propriedade', (req, res) => {
+    connecta.query('SELECT * FROM Propriedades', (err, rows) => {
+        if (err) {
+            console.error('Erro ao buscar propriedades: ' + err);
+            res.status(500).send('Erro ao buscar propriedades');
+            return;
+        }
+        res.status(200).render('propriedade', { propriedades: rows });
+    });
 });
+
+
+app.get('/cadastraPropriedade', (req, res) => {
+    res.status(200).render('cadastraPropriedade');
+});
+
+app.post('/cadastraPropriedade', (req, res) => {
+    const { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade } = req.body;
+    const propriedade = { Valor: valor, Rua: rua, Numero: numero, Bairro: bairro, Cidade: cidade, Estado: estado, Pais: pais, CEP: cep, Tipo: tipo, Area_m2: area_m2, Disponibilidade: disponibilidade };
+
+    connecta.query('INSERT INTO Propriedades SET ?', propriedade, (err, result) => {
+        if (err) {
+            console.error('Erro ao cadastrar propriedade: ' + err);
+            res.status(500).send('Erro ao cadastrar propriedade');
+            return;
+        }
+        console.log('Propriedade cadastrada com sucesso.');
+        res.status(202).redirect('/propriedade');
+    });
+});
+
+
 
 app.post('/cadastroCli', (req,res) => {
     const {nome,sobrenome,email,endereco,cidade, estado,cep} = req.body;
