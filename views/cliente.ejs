@@ -6,20 +6,57 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script>
         function deletaCliente(cliId){
-            if(confirm("Certeza que gostaria de excluir um cliente do sistema? essa operação é irreversivel ")){
-                
+            if(confirm("Certeza que gostaria de excluir um cliente do sistema? essa operação é irreversível?")){
+                fetch(`/cliente/${cliId}`, {
+                    method: "DELETE"
+                })
+                .then(response => {
+                    if(response.ok){
+                        alert("Cliente removido com sucesso!");
+                        location.reload();
+                    } else {
+                        alert("Erro ao remover cliente!");
+                    }
+                })
             }
         }
+        function editarCliente(cliId) {
+        window.location.href = `/editarCliente/${cliId}`;
+    }
     </script>
-    <title>cliente</title>
+    <title>Cliente</title>
 </head>
 <body>
     <%- include("partials/header") %>
-    <h1>cliente</h1>
-    <ul>
-        <% clientes.forEach(cliente => {  %>
-            <li>nome: <%- cliente.nome %> endereço: <%- cliente.endereco %> - <button class="btn btn-danger mt-2 w-1 h-1" onclick="deletaCliente(<%- cliente.cliId %>)">EXCLUIR CLIENTE </button></li>
-            <% }); %>
-    </ul>
+    <div class="container">
+        <h1>Cliente</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome Cliente</th>
+                    <th>Endereço</th>
+                    <th>CPF</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% clientes.forEach(cliente => { %>
+                    <tr>
+                        <td><%- cliente.nome %></td>
+                        <td><%- cliente.cpf %></td>
+                        <td><%- cliente.endereco %></td>
+                        <td><%- cliente.email %></td>
+                        <td><%- cliente.telefone %></td>
+                        <td>
+                            <button class="btn btn-primary" onclick="editarCliente(<%= cliente.id %>)">EDITAR</button>
+                            <button class="btn btn-danger" onclick="deletaCliente(<%= cliente.id %>)">EXCLUIR</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
