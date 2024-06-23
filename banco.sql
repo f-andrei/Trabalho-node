@@ -16,6 +16,7 @@ CREATE TABLE clientes(
 CREATE TABLE venda (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     propriedade_id INTEGER NOT NULL,
+    dono_id INTEGER NOT NULL,
     cliente_id INTEGER NOT NULL,
     corretor_id INTEGER NOT NULL,
     valor DECIMAL(10, 2) NOT NULL,
