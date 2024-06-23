@@ -69,7 +69,7 @@ app.post('/cadastraPropriedade', (req, res) => {
     });
 });
 
-pp.delete("/propriedade/:id", (req, res) => {
+app.delete("/propriedade/:id", (req, res) => {
     const propriedadeId = req.params.id;
 
     connecta.query("DELETE FROM Propriedades WHERE id = ?", propriedadeId, (err, result) => {
@@ -89,22 +89,26 @@ pp.delete("/propriedade/:id", (req, res) => {
     });
 });
 
-app.put("/propriedade/:id", (req, res) => {
+app.get('/atualizaPropriedade/:id', (req, res) => {
     const propriedadeId = req.params.id;
-    const { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade } = req.body;
-    const atualizacaoPropriedade = { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade };
-
-    connecta.query("UPDATE Propriedades SET ? WHERE id = ?", [atualizacaoPropriedade, propriedadeId], (err, result) => {
+    
+    connecta.query('SELECT * FROM Propriedades WHERE Id = ?', [propriedadeId], (err, result) => {
         if (err) {
-            console.error("Erro ao atualizar propriedade:", err);
-            res.status(500).send("Erro ao tentar atualizar a propriedade");
+            console.error('Erro ao consultar propriedade:', err);
+            res.status(500).send('Erro ao consultar propriedade');
             return;
         }
 
-        console.log("Propriedade atualizada com sucesso");
-        res.status(200).send("Propriedade atualizada com sucesso");
+        if (result.length === 0) {
+            res.status(404).send('Propriedade não encontrada');
+            return;
+        }
+
+        res.render('atualizaPropriedade', { propriedade: result[0] });
     });
 });
+
+
 
 
   
