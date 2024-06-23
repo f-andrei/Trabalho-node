@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <%- include('partials/header') %>
+                <%- include('../partials/header') %>
                 <h2>Realizar venda</h2>
             </div>
         </div>
@@ -18,8 +18,24 @@
             <div class="col">
                 <form action="venda" method="post">
                     <div>
+                        <label class="form-label" for="propriedade_id">Propriedade</label>
+                        <select class="form-control" name="propriedade_id" id="propriedade_id">
+                            <% propriedades.forEach(propriedade => { %>
+                                <option value="<%= propriedade.Id %>">Rua <%= propriedade.rua %>, Nº <%= propriedade.numero %>, <%= propriedade.bairro %> - tipo: <%= propriedade.tipo %> | Cliente: <%= propriedade.nome %> <%= propriedade.sobrenome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
                         <label class="form-label" for="cliente_id">Cliente</label>
                         <select class="form-control" name="cliente_id" id="cliente_id">
+                            <% clientes.forEach(cliente => { %>
+                                <option value="<%= cliente.id %>"><%= cliente.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="dono_id">Dono</label>
+                        <select class="form-control" name="dono_id" id="dono_id">
                             <% clientes.forEach(cliente => { %>
                                 <option value="<%= cliente.id %>"><%= cliente.nome %></option>
                             <% }); %>
@@ -30,14 +46,6 @@
                         <select class="form-control" name="corretor_id" id="corretor_id">
                             <% corretores.forEach(corretor => { %>
                                 <option value="<%= corretor.id %>"><%= corretor.nome %></option>
-                            <% }); %>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="form-label" for="propriedade_id">Propriedade</label>
-                        <select class="form-control" name="propriedade_id" id="propriedade_id">
-                            <% propriedades.forEach(propriedade => { %>
-                                <option value="<%= propriedade.id %>">Rua <%= propriedade.rua %>, Nº <%= propriedade.numero %>, <%= propriedade.bairro %> - tipo: <%= propriedade.tipo %> | Cliente: <%= propriedade.nome %> <%= propriedade.sobrenome %></option>
                             <% }); %>
                         </select>
                     </div>
