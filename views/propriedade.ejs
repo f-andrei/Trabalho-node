@@ -16,29 +16,25 @@
                 <ul class="list-group">
                     <% propriedades.forEach(propriedade => { %>
                         <li class="list-group-item">
-                            <strong>ID:</strong> <%= propriedade.id %><br>
-                            <strong>Valor:</strong> R$ <%= propriedade.valor %><br>
-                            <strong>Cliente ID:</strong> <%= propriedade.cliente_ID %><br>
-                            <strong>Corretor ID:</strong> <%= propriedade.corretor_Id %><br>
-                            <strong>Endereço:</strong> <%= propriedade.rua %> <%= propriedade.numero %><br>
-                            <strong>Bairro:</strong> <%= propriedade.bairro %><br>
-                            <strong>Cidade:</strong> <%= propriedade.cidade %><br>
-                            <strong>Estado:</strong> <%= propriedade.estado %><br>
-                            <strong>País:</strong> <%= propriedade.pais %><br>
-                            <strong>CEP:</strong> <%= propriedade.cep %><br>
-                            <strong>Tipo:</strong> <%= propriedade.tipo %><br>
-                            <strong>Área (m²):</strong> <%= propriedade.area_m2 %><br>
-                            <strong>Disponibilidade:</strong> <%= propriedade.disponibilidade %><br>
+                            <strong>Propriedade ID:</strong> <%= propriedade.Id %><br>
+                            <strong>Valor:</strong> <%= propriedade.Valor %><br>
+                            <strong>Rua:</strong> <%= propriedade.Rua %><br>
+                            <strong>Número:</strong> <%= propriedade.Numero %><br>
+                            <strong>Bairro:</strong> <%= propriedade.Bairro %><br>
+                            <strong>Cidade:</strong> <%= propriedade.Cidade %><br>
+                            <strong>Estado:</strong> <%= propriedade.Estado %><br>
+                            <strong>País:</strong> <%= propriedade.Pais %><br>
+                            <strong>CEP:</strong> <%= propriedade.CEP %><br>
+                            <strong>Tipo:</strong> <%= propriedade.Tipo %><br>
+                            <strong>Área (m²):</strong> <%= propriedade.Area_m2 %><br>
+                            <strong>Disponibilidade:</strong> <%= propriedade.Disponibilidade %><br>
                             
-                            <form id="updateForm_<%= propriedade.id %>" class="mt-2" onsubmit="atualizaPropriedade('<%= propriedade.id %>'); return false;">
-                                <div class="form-group">
-                                    <label for="valor_<%= propriedade.id %>">Novo Valor:</label>
-                                    <input type="number" class="form-control" id="valor_<%= propriedade.id %>" name="valor" placeholder="Novo valor" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Atualizar</button>
+                            <form id="deleteForm_<%= propriedade.Id %>" class="mt-2">
+                                <button type="button" class="btn btn-danger" onclick="deletaPropriedade('<%= propriedade.Id %>')">Deletar</button>
                             </form>
-                            <form id="deleteForm_<%= propriedade.id %>" class="mt-2">
-                                <button type="button" class="btn btn-danger" onclick="deletaPropriedade('<%= propriedade.id %>')">Deletar</button>
+
+                            <form id="redirectForm_<%= propriedade.Id %>" class="mt-2">
+                                <button type="button" class="btn btn-primary" onclick="redirecionaAtualizacao('<%= propriedade.Id %>')">Atualizar</button>
                             </form>
                         </li>
                     <% }); %>
@@ -50,7 +46,7 @@
 
     <script>
         function deletaPropriedade(propriedadeId) {
-            if (confirm("Tem certeza que deseja excluir esta propriedade? Esta ação é irreversível.")) {
+            if (confirm("Tem certeza que deseja excluir esta propriedade?")) {
                 fetch(`/propriedade/${propriedadeId}`, {
                     method: 'DELETE'
                 })
@@ -69,30 +65,9 @@
             }
         }
 
-        function atualizaPropriedade(propriedadeId, dadosAtualizados) {
-    if (confirm("Tem certeza que deseja atualizar esta propriedade?")) {
-        fetch(`/propriedade/${propriedadeId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dadosAtualizados)
-        })
-        .then(response => {
-            if (response.ok) {
-                alert("Propriedade atualizada com sucesso!");
-                location.reload(); // Recarrega a página após a atualização
-            } else {
-                alert("Erro ao atualizar propriedade");
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao enviar solicitação:', error);
-            alert("Erro ao atualizar propriedade");
-        });
-    }
-}
-
+        function redirecionaAtualizacao(propriedadeId) {
+            window.location.href = `/atualizaPropriedade/${propriedadeId}`;
+        }
     </script>
 </body>
 </html>
