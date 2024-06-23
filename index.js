@@ -37,7 +37,7 @@ app.get("/corretor", (req,res) => {
 
 
 
-
+//Gustavo - Propriedade
 app.get('/propriedade', (req, res) => {
     connecta.query('SELECT * FROM Propriedades', (err, result) => {
         if (err) {
@@ -108,6 +108,27 @@ app.get('/atualizaPropriedade/:id', (req, res) => {
     });
 });
 
+app.put('/propriedade/:id', (req, res) => {
+    const propriedadeId = req.params.id;
+    const dadosAtualizados = req.body;
+
+    connecta.query('UPDATE Propriedades SET ? WHERE Id = ?', [dadosAtualizados, propriedadeId], (err, result) => {
+        if (err) {
+            console.error('Erro ao atualizar propriedade:', err);
+            res.status(500).send('Erro ao atualizar propriedade');
+            return;
+        }
+
+        if (result.affectedRows === 0) {
+            res.status(404).send('Propriedade não encontrada');
+            return;
+        }
+
+        console.log('Propriedade atualizada com sucesso');
+        res.status(200).send('Propriedade atualizada com sucesso');
+    });
+});
+// - - - -- - - - - -
 
 
 
