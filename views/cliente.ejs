@@ -34,7 +34,8 @@
             <thead>
                 <tr>
                     <th>Nome Cliente</th>
-                    <th>Endereço de propriedade</th>
+                    <th>Endereço</th>
+                    <th>CPF</th>
                     <th>Email</th>
                     <th>Telefone</th>
                     <th>Ação</th>
@@ -44,12 +45,13 @@
                 <% clientes.forEach(cliente => { %>
                     <tr>
                         <td><%- cliente.nome %></td>
+                        <td><%- cliente.cpf %></td>
                         <td><%- cliente.endereco %></td>
                         <td><%- cliente.email %></td>
-                        <td><%- cliente.tel %></td>
+                        <td><%- cliente.telefone %></td>
                         <td>
-                            <button class="btn btn-primary" onclick="editarCliente(<%= cliente.id %>)">EDITAR CLIENTE</button>
-                            <button class="btn btn-danger" onclick="deletaCliente(<%= cliente.id %>)">EXCLUIR CLIENTE</button>
+                            <button class="btn btn-primary" onclick="editarCliente(<%= cliente.id %>)">EDITAR</button>
+                            <button class="btn btn-danger" onclick="deletaCliente(<%= cliente.id %>)">EXCLUIR</button>
                         </td>
                     </tr>
                 <% }); %>
