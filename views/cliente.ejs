@@ -20,9 +20,9 @@
                 })
             }
         }
-        function editaCliente(cliId){
-
-        }
+        function editarCliente(cliId) {
+        window.location.href = `/editarCliente/${cliId}`;
+    }
     </script>
     <title>Cliente</title>
 </head>
@@ -48,7 +48,7 @@
                         <td><%- cliente.email %></td>
                         <td><%- cliente.tel %></td>
                         <td>
-                    <button class="btn btn-primary" onclick="window.location.href='/editarCliente/<%= cliente.id %>'">EDITAR CLIENTE</button>
+                            <button class="btn btn-primary" onclick="editarCliente(<%= cliente.id %>)">EDITAR CLIENTE</button>
                             <button class="btn btn-danger" onclick="deletaCliente(<%= cliente.id %>)">EXCLUIR CLIENTE</button>
                         </td>
                     </tr>

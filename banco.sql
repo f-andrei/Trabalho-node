@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS banco;
 
 USE banco;
@@ -6,8 +7,8 @@ CREATE TABLE clientes(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     sobrenome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    telefone VARCHAR(255) NOT NULL,
     endereco VARCHAR(255) NOT NULL,
     cidade VARCHAR(255) NOT NULL,
     estado VARCHAR(255) NOT NULL,

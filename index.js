@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const connecta = require('./config/conectaBanco');
 const { error } = require('console');
 
-
 const app = express();
 app.set("view engine","ejs")
 app.use(express.static(path.join(__dirname, "public")));
@@ -40,8 +39,8 @@ app.get("/anunciar-imovel", (req,res) => {
 });
 
 app.post('/cadastroCli', (req,res) => {
-    const {nome,sobrenome,email,endereco,cidade, estado,cep} = req.body;
-    const cliente = {nome,sobrenome,email,endereco,cidade, estado,cep};
+    const {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep} = req.body;
+    const cliente = {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep};
     const query = connecta.query("INSERT INTO clientes SET ? ", cliente, (err) => {
         if(err){
             console.error("erro ao inserir na tebela clientes " + err);
@@ -82,15 +81,15 @@ app.get("/editarCliente/:id", (req, res) => {
             res.status(404).render("erro");
             return;
         }
-        res.status(200).render("editaCliente", { cliente: results[0] });
+        res.status(200).render("editarCliente", { cliente: results[0] });
     });
 });
 
 app.put("/cliente/:id", (req, res) => {
     const cliId = req.params.id;
-    const { nome, sobrenome, email, endereco, cidade, estado, cep } = req.body;
-    const cliente = { nome, sobrenome, email, endereco, cidade, estado, cep };
-    
+    const { nome, sobrenome, email, endereco, telefone, cidade, estado, cep } = req.body;
+    const cliente = { nome, sobrenome, email, telefone, endereco, cidade, estado, cep };
+
     const query = connecta.query("UPDATE clientes SET ? WHERE id = ?", [cliente, cliId], (err, result) => {
         if (err) {
             console.error("Erro ao atualizar a tabela clientes: " + err);
