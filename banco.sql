@@ -13,19 +13,19 @@ CREATE TABLE clientes(
     estado VARCHAR(255) NOT NULL,
     cep VARCHAR(255) NOT NULL
 );
-CREATE TABLE Propriedade (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Valor FLOAT,
-    Cliente_ID VARCHAR(255),
-    Corretor_Id VARCHAR(255),
-    Rua VARCHAR(255),
-    Numero INT,
-    Bairro VARCHAR(255),
-    Cidade VARCHAR(255),
-    Estado VARCHAR(255),
-    Pais VARCHAR(255),
-    CEP VARCHAR(255),
-    Tipo VARCHAR(255),
-    Area_m2 FLOAT,
-    Disponibilidade VARCHAR(255)
+CREATE TABLE propriedade (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    valor FLOAT,
+    cliente_ID VARCHAR(255),
+    corretor_Id VARCHAR(255),
+    rua VARCHAR(255),
+    numero INT,
+    bairro VARCHAR(255),
+    cidade VARCHAR(255),
+    estado VARCHAR(255),
+    pais VARCHAR(255),
+    cep VARCHAR(255),
+    tipo VARCHAR(255),
+    area_m2 FLOAT,
+    disponibilidade VARCHAR(255)
 );
