@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Propriedade</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <%- include("partials/header") %>
+    
+    <div class="container mt-5">
+        <h1 class="mb-4">Atualizar Propriedade</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Atualizar Informações da Propriedade</h5>
+                <form id="updateForm" onsubmit="atualizaPropriedade('<%= propriedade.Id %>'); return false;">
+                    <div class="form-group">
+                        <label for="valor">Novo Valor:</label>
+                        <input type="number" class="form-control" id="valor" name="valor" placeholder="Novo valor" value="<%= propriedade.Valor %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rua">Nova Rua:</label>
+                        <input type="text" class="form-control" id="rua" name="rua" placeholder="Nova rua" value="<%= propriedade.Rua %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="numero">Novo Número:</label>
+                        <input type="number" class="form-control" id="numero" name="numero" placeholder="Novo número" value="<%= propriedade.Numero %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="bairro">Novo Bairro:</label>
+                        <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Novo bairro" value="<%= propriedade.Bairro %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="cidade">Nova Cidade:</label>
+                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Nova cidade" value="<%= propriedade.Cidade %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Novo Estado:</label>
+                        <input type="text" class="form-control" id="estado" name="estado" placeholder="Novo estado" value="<%= propriedade.Estado %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="pais">Novo País:</label>
+                        <input type="text" class="form-control" id="pais" name="pais" placeholder="Novo país" value="<%= propriedade.Pais %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="cep">Novo CEP:</label>
+                        <input type="text" class="form-control" id="cep" name="cep" placeholder="Novo CEP" value="<%= propriedade.CEP %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo">Novo Tipo:</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Novo tipo" value="<%= propriedade.Tipo %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="area_m2">Nova Área (m²):</label>
+                        <input type="number" class="form-control" id="area_m2" name="area_m2" placeholder="Nova área (m²)" value="<%= propriedade.Area_m2 %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="disponibilidade">Nova Disponibilidade:</label>
+                        <input type="text" class="form-control" id="disponibilidade" name="disponibilidade" placeholder="Nova disponibilidade" value="<%= propriedade.Disponibilidade %>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Atualizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function atualizaPropriedade(propriedadeId) {
+            const valor = document.getElementById('valor').value;
+            const rua = document.getElementById('rua').value;
+            const numero = document.getElementById('numero').value;
+            const bairro = document.getElementById('bairro').value;
+            const cidade = document.getElementById('cidade').value;
+            const estado = document.getElementById('estado').value;
+            const pais = document.getElementById('pais').value;
+            const cep = document.getElementById('cep').value;
+            const tipo = document.getElementById('tipo').value;
+            const area_m2 = document.getElementById('area_m2').value;
+            const disponibilidade = document.getElementById('disponibilidade').value;
+
+            const dadosAtualizados = {
+                valor,
+                rua,
+                numero,
+                bairro,
+                cidade,
+                estado,
+                pais,
+                cep,
+                tipo,
+                area_m2,
+                disponibilidade
+            };
+
+            if (confirm("Tem certeza que deseja atualizar esta propriedade?")) {
+                fetch(`/propriedade/${propriedadeId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dadosAtualizados)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Propriedade atualizada com sucesso!");
+                        location.href = "/propriedade"; 
+                    } else {
+                        alert("Erro ao atualizar propriedade");
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar solicitação:', error);
+                    alert("Erro ao atualizar propriedade");
+                });
+            }
+        }
+    </script>
+</body>
+</html>
