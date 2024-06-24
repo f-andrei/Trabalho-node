@@ -13,6 +13,17 @@ CREATE TABLE clientes(
     estado VARCHAR(255) NOT NULL,
     cep VARCHAR(255) NOT NULL
 );
+<<<<<<< corretor
+
+
+CREATE TABLE corretor(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(70) NOT NULL,
+    cpf VARCHAR(15) NOT NULL,
+    telefone VARCHAR(30) NOT NULL,
+    email VARCHAR(80) NOT NULL,
+    localidade VARCHAR(255) NOT NULL
+=======
 CREATE TABLE propriedade (
     id INT AUTO_INCREMENT PRIMARY KEY,
     valor FLOAT,
@@ -28,4 +39,5 @@ CREATE TABLE propriedade (
     tipo VARCHAR(255),
     area_m2 FLOAT,
     disponibilidade VARCHAR(255)
+>>>>>>> main
 );
