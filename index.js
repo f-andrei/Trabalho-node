@@ -30,14 +30,7 @@ app.get("/cadastraCliente", (req,res) => {
     res.status(200).render("cadastraCliente");
 });
 
-app.get("/corretor", (req,res) => {
-    res.status(200).render("corretor");
     
-});
-
-app.get("/corretor/cadastraCorretor", (req,res) => {
-    res.status(200).render("cadastraCorretor");
-});
 
 app.get("/propriedade", (req,res) => {
     res.status(200).render("propriedade");
