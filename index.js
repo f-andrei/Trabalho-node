@@ -205,7 +205,7 @@ app.post("/venda", (req, res) => {
         }
         console.log("Venda inserida no banco de dados");
     });
-    res.status(202).redirect("/criar-venda");
+    res.status(202).redirect("/listar-vendas");
 });
 
 
