@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Imóveis</title>
+    <script>
+        function deletaVenda(vendaId){
+            if(confirm("Deseja realmente deletar esta venda?")){
+                fetch(`/venda/${vendaId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if(response.ok){
+                        alert("Venda deletada com sucesso.");
+                        location.reload();
+                    } else {
+                        alert("Não foi possível deletar a venda.");
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -24,7 +41,7 @@
                                     <th scope="col">Comprador</th>
                                     <th scope="col">Dono</th>
                                     <th scope="col">Corretor</th>
-                                    <th scope="col">Propriedade</th>
+                                    <th scope="col">propriedade</th>
                                     <th scope="col">Valor</th>
                                     <th scope="col">Forma de pagamento</th>
                                     <th scope="col">Parcelas</th>
@@ -40,6 +57,12 @@
                                         <td>R$ <%= venda.valor %></td>
                                         <td><%= venda.forma_pagamento %></td>
                                         <td><%= venda.qtd_parcelas %></td>
+                                        <td>
+                                            <a class="btn btn-primary" href="/editar-venda/<%= venda.id %>">Editar</a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger" onclick="deletaVenda('<%= venda.id %>')">Deletar</a>
+                                        </td>
                                     </tr>
                                 <% }); %>
                             </tbody>
