@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 
 
 app.get("/cliente", (req,res) => {
-    connecta.query("SELECT * FROM clientes;", (err, results, fields) => {
+    connecta.query("SELECT * FROM cliente;", (err, results, fields) => {
         if(err){
             console.error("Erro na cosulta" + err);
             res.status(500).render("erro");
@@ -35,7 +35,7 @@ app.get("/cadastraCliente", (req,res) => {
 
 //Gustavo - Propriedade
 app.get('/propriedade', (req, res) => {
-    connecta.query('SELECT * FROM Propriedades', (err, result) => {
+    connecta.query('SELECT * FROM propriedade', (err, result) => {
         if (err) {
             console.error('Erro ao consultar propriedades:', err);
             res.status(500).send('Erro ao consultar propriedades');
@@ -54,7 +54,7 @@ app.post('/cadastraPropriedade', (req, res) => {
     const { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade } = req.body;
     const propriedade = { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade };
 
-    connecta.query('INSERT INTO Propriedades SET ?', propriedade, (err, result) => {
+    connecta.query('INSERT INTO propriedade SET ?', propriedade, (err, result) => {
         if (err) {
             console.error('Erro ao cadastrar propriedade:', err);
             res.status(500).send('Erro ao cadastrar propriedade');
@@ -68,7 +68,7 @@ app.post('/cadastraPropriedade', (req, res) => {
 app.delete("/propriedade/:id", (req, res) => {
     const propriedadeId = req.params.id;
 
-    connecta.query("DELETE FROM Propriedades WHERE id = ?", propriedadeId, (err, result) => {
+    connecta.query("DELETE FROM propriedade WHERE id = ?", propriedadeId, (err, result) => {
         if (err) {
             console.error("Erro ao excluir propriedade:", err);
             res.status(500).send("Erro ao tentar excluir a propriedade");
@@ -88,7 +88,7 @@ app.delete("/propriedade/:id", (req, res) => {
 app.get('/atualizaPropriedade/:id', (req, res) => {
     const propriedadeId = req.params.id;
     
-    connecta.query('SELECT * FROM Propriedades WHERE Id = ?', [propriedadeId], (err, result) => {
+    connecta.query('SELECT * FROM propriedade WHERE Id = ?', [propriedadeId], (err, result) => {
         if (err) {
             console.error('Erro ao consultar propriedade:', err);
             res.status(500).send('Erro ao consultar propriedade');
@@ -111,7 +111,7 @@ app.get("/vendas", (req, res) => {
 
 
 app.get("/criar-venda", (req, res) => {
-    connecta.query("SELECT * FROM clientes;", (err, clientesResults) => {
+    connecta.query("SELECT * FROM cliente;", (err, clientesResults) => {
         if (err) {
             console.error("Erro na consulta: " + err);
             res.status(500).render("erro");
@@ -126,9 +126,9 @@ app.get("/criar-venda", (req, res) => {
             }
 
             connecta.query(`
-                SELECT propriedade.*, clientes.nome, clientes.sobrenome
+                SELECT propriedade.*, cliente.nome, cliente.sobrenome
                 FROM propriedade
-                JOIN clientes ON propriedade.cliente_ID = clientes.id;
+                JOIN cliente ON propriedade.cliente_id = cliente.id;
             `, (err, propriedadesResults) => {
                 if (err) {
                     console.error("Erro na consulta: " + err);
@@ -160,8 +160,8 @@ app.get("/listar-vendas", (req, res) => {
                propriedade.bairro AS propriedade_bairro,
                propriedade.tipo AS propriedade_tipo
         FROM venda
-        JOIN clientes AS comprador ON venda.cliente_id = comprador.id
-        JOIN clientes AS dono ON venda.dono_id = dono.id
+        JOIN cliente AS comprador ON venda.cliente_id = comprador.id
+        JOIN cliente AS dono ON venda.dono_id = dono.id
         JOIN corretor ON venda.corretor_id = corretor.id
         JOIN propriedade ON venda.propriedade_id = propriedade.id;
     `;
@@ -217,19 +217,19 @@ app.get("/editar-venda/:id", (req, res) => {
             res.status(500).render("erro");
             return;
         }
-        connecta.query("SELECT nome FROM clientes WHERE id = ?", [vendaResults[0].cliente_id], (err, clienteResults) => {
+        connecta.query("SELECT nome FROM cliente WHERE id = ?", [vendaResults[0].cliente_id], (err, clienteResults) => {
             if (err) {
                 console.error("Erro na consulta: " + err);
                 res.status(500).render("erro");
                 return;
             }
-            connecta.query("SELECT nome FROM clientes WHERE id = ?", [vendaResults[0].dono_id], (err, donoResults) => {
+            connecta.query("SELECT nome FROM cliente WHERE id = ?", [vendaResults[0].dono_id], (err, donoResults) => {
                 if (err) {
                     console.error("Erro na consulta: " + err);
                     res.status(500).render("erro");
                     return;
                 }
-                connecta.query("SELECT * FROM clientes", (err, clientesResults) => {
+                connecta.query("SELECT * FROM cliente", (err, clientesResults) => {
                     if (err) {
                         console.error("Erro na consulta: " + err);
                         res.status(500).render("erro");
@@ -284,7 +284,7 @@ app.put('/propriedade/:id', (req, res) => {
     const propriedadeId = req.params.id;
     const dadosAtualizados = req.body;
 
-    connecta.query('UPDATE Propriedades SET ? WHERE Id = ?', [dadosAtualizados, propriedadeId], (err, result) => {
+    connecta.query('UPDATE propriedade SET ? WHERE Id = ?', [dadosAtualizados, propriedadeId], (err, result) => {
         if (err) {
             console.error('Erro ao atualizar propriedade:', err);
             res.status(500).send('Erro ao atualizar propriedade');
@@ -333,9 +333,9 @@ app.delete("/venda/:id", (req, res) => {
 app.post('/cadastroCli', (req,res) => {
     const {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep} = req.body;
     const cliente = {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep};
-    const query = connecta.query("INSERT INTO clientes SET ? ", cliente, (err) => {
+    const query = connecta.query("INSERT INTO cliente SET ? ", cliente, (err) => {
         if(err){
-            console.error("erro ao inserir na tebela clientes " + err);
+            console.error("erro ao inserir na tebela cliente " + err);
             res.status(500).send("Erro");
         }
         console.log("Cliente inserido no banco de dados");
@@ -347,9 +347,9 @@ app.post('/cadastroCli', (req,res) => {
 
 app.delete("/cliente/:id", (req, res) => {
     const cliId = req.params.id;
-    const query = connecta.query("DELETE FROM clientes WHERE id = ?", [cliId], (err, result) => {
+    const query = connecta.query("DELETE FROM cliente WHERE id = ?", [cliId], (err, result) => {
         if (err) {
-            console.error("Erro ao excluir na tabela clientes: " + err);
+            console.error("Erro ao excluir na tabela cliente: " + err);
             res.status(500).send("Erro");
             return;
         }
@@ -364,7 +364,7 @@ app.delete("/cliente/:id", (req, res) => {
 
 app.get("/editarCliente/:id", (req, res) => {
     const cliId = req.params.id;
-    connecta.query("SELECT * FROM clientes WHERE id = ?", [cliId], (err, results) => {
+    connecta.query("SELECT * FROM cliente WHERE id = ?", [cliId], (err, results) => {
         if (err) {
             console.error("Erro na consulta: " + err);
             res.status(500).render("erro");
@@ -384,9 +384,9 @@ app.put("/cliente/:id", (req, res) => {
     const { nome, sobrenome, email, endereco, telefone, cidade, estado, cep } = req.body;
     const cliente = { nome, sobrenome, email, telefone, endereco, cidade, estado, cep };
 
-    const query = connecta.query("UPDATE clientes SET ? WHERE id = ?", [cliente, cliId], (err, result) => {
+    const query = connecta.query("UPDATE cliente SET ? WHERE id = ?", [cliente, cliId], (err, result) => {
         if (err) {
-            console.error("Erro ao atualizar a tabela clientes: " + err);
+            console.error("Erro ao atualizar a tabela cliente: " + err);
             res.status(500).send("Erro");
             return;
         }
