@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Editar venda</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <%- include('../partials/header') %>
+                <h2 class="text-center">Editar venda</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form id="editVendaForm" action="/edita-venda/<%= venda.id %>" method="post">
+                    <input type="hidden" name="_method" value="PUT">
+                    <div>
+                        <label class="form-label" for="propriedade_id">propriedade</label>
+                        <select class="form-control" name="propriedade_id" id="propriedade_id">
+                            <option value="<%- venda.propriedade_id %>">Rua <%- propriedade.rua %>, Nº <%- propriedade.numero %>, <%- propriedade.bairro %> - tipo: <%- propriedade.tipo %></option>
+                            <% propriedades.forEach(propriedade => { %>
+                                <option value="<%= propriedade.id %>">Rua <%= propriedade.rua %>, Nº <%= propriedade.numero %>, <%= propriedade.bairro %> - tipo: <%= propriedade.tipo %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="cliente_id">Comprador</label>
+                        <select class="form-control" name="cliente_id" id="cliente_id">
+                            <option value="<%= venda.cliente_id %>"><%- cliente.nome %></option>
+                            <% clientes.forEach(cliente => { %>
+                            <option value="<%= cliente.id %>"><%= cliente.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="dono_id">Dono</label>
+                        <select class="form-control" name="dono_id" id="dono_id">
+                            <option value="<%= venda.dono_id %>"><%= dono.nome %></option>
+                            <% clientes.forEach(cliente => { %>
+                                <option value="<%= cliente.id %>"><%= cliente.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="corretor_id">Corretor</label>
+                        <select class="form-control" name="corretor_id" id="corretor_id">
+                            <option value="<%= venda.corretor_id %>"><%= corretor.nome %></option>
+                            <% corretores.forEach(corretor => { %>
+                                <option value="<%= corretor.id %>"><%= corretor.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="valor" >Valor</label>
+                            <input class="form-control" type="number" value="<%= venda.valor %>" name="valor" id="valor" placeholder="<%= venda.valor %>">
+                    </div>
+                    <div>
+                        <label class="form-label" for="forma_pagamento">Forma de pagamento</label>
+                        <select class="form-control" name="forma_pagamento" id="forma_pagamento">
+                            <option value="<%= venda.forma_pagamento %>"><%= venda.forma_pagamento %></option>
+                            <option value="A vista">A vista</option>
+                            <option value="Financiamento">Financiamento</option>
+                            <option value="Parcelamento">Parcelamento</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="qtd_parcelas" >Parcelas</label>
+                        <input class="form-control" value="<%= venda.qtd_parcelas %>" type="number" name="qtd_parcelas" id="qtd_parcelas" placeholder="<%= venda.qtd_parcelas %>" >
+                    </div>
+                    <div>
+                        <button class="btn btn-primary mt-3" type="submit">Editar venda</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('editVendaForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const form = event.target;
+            const action = form.action;
+            
+            fetch(action, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(new FormData(form)).toString()
+            })
+            .then(response => {
+                if (response.ok || response.status === 202) {
+                    window.location.href = '/listar-vendas';
+                    alert("Venda editada com sucesso.");
+                } else {
+                        console.error('Error:', text);
+                        alert('Erro ao atualizar a venda');
+                    }
+            });
+        });
+    </script>
+</body>
+</html>
