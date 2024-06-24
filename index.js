@@ -172,24 +172,31 @@ app.get("/listar-vendas", (req, res) => {
             res.status(500).render("erro");
             return;
         }
+        connecta.query("SELECT * FROM propriedade", (err, propriedadesResults) => {
+            if (err) {
+                console.error("Erro na consulta: " + err);
+                res.status(500).render("erro");
+                return;
+            }
+            const vendas = results.map(row => ({
+                comprador: { nome: row.comprador_nome, sobrenome: row.comprador_sobrenome },
+                dono: { nome: row.dono_nome, sobrenome: row.dono_sobrenome },
+                corretor: { nome: row.corretor_nome },
+                propriedade: {
+                    rua: row.propriedade_rua,
+                    numero: row.propriedade_numero,
+                    bairro: row.propriedade_bairro,
+                    tipo: row.propriedade_tipo
+                },
+                id: row.id,
+                valor: row.valor,
+                forma_pagamento: row.forma_pagamento,
+                qtd_parcelas: row.qtd_parcelas,
+            }));
+            res.status(200).render("venda/listarVenda", { vendas: vendas, propriedades: propriedadesResults});
+        });
+        
 
-        const vendas = results.map(row => ({
-            comprador: { nome: row.comprador_nome, sobrenome: row.comprador_sobrenome },
-            dono: { nome: row.dono_nome, sobrenome: row.dono_sobrenome },
-            corretor: { nome: row.corretor_nome },
-            propriedade: {
-                rua: row.propriedade_rua,
-                numero: row.propriedade_numero,
-                bairro: row.propriedade_bairro,
-                tipo: row.propriedade_tipo
-            },
-            id: row.id,
-            valor: row.valor,
-            forma_pagamento: row.forma_pagamento,
-            qtd_parcelas: row.qtd_parcelas,
-        }));
-
-        res.status(200).render("venda/listarVenda", { vendas: vendas });
     });
 });
 
