@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propriedades</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <%- include("partials/header") %>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Propriedade:</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cadastrar Propriedade</h5>
+                <form action="/cadastraPropriedade" method="POST">
+                    <div class="form-group">
+                        <label for="valor">Valor:</label>
+                        <input type="number" class="form-control" id="valor" name="valor" placeholder="Informe o valor" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="rua">Rua:</label>
+                            <input type="text" class="form-control" id="rua" name="rua" placeholder="Nome da rua">
+                        </div>
+                        <div class="col">
+                            <label for="numero">Número:</label>
+                            <input type="number" class="form-control" id="numero" name="numero" placeholder="Número do imóvel">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro">
+                        </div>
+                        <div class="col">
+                            <label for="cidade">Cidade:</label>
+                            <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="estado">Estado:</label>
+                            <input type="text" class="form-control" id="estado" name="estado" placeholder="Estado">
+                        </div>
+                        <div class="col">
+                            <label for="pais">País:</label>
+                            <input type="text" class="form-control" id="pais" name="pais" placeholder="País">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="cep">CEP:</label>
+                            <input type="number" class="form-control" id="cep" name="cep" placeholder="CEP">
+                        </div>
+                        <div class="col">
+                            <label for="tipo">Tipo:</label>
+                            <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo de propriedade">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="area_m2">Área (m²):</label>
+                            <input type="text" class="form-control" id="area_m2" name="area_m2" placeholder="Área em metros quadrados">
+                        </div>
+                        <div class="col">
+                            <label for="disponibilidade">Disponibilidade:</label>
+                            <input type="text" class="form-control" id="disponibilidade" name="disponibilidade" placeholder="Disponibilidade">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="cliente_id">Cliente</label>
+                        <select class="form-control" name="cliente_id" id="cliente_id">
+                            <option value="1">Cliente 1</option>
+                            <option value="2">Cliente 2</option>
+                            <option value="3">Cliente 3</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="corretor_id">Corretor</label>
+                        <select class="form-control" name="corretor_id" id="corretor_id">
+                            <option value="1">Corretor 1</option>
+                            <option value="2">Corretor 2</option>
+                            <option value="3">Corretor 3</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Cadastrar Propriedade</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
