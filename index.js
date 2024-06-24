@@ -70,8 +70,8 @@ app.get('/cadastraPropriedade', (req, res) => {
 });
 
 app.post('/cadastraPropriedade', (req, res) => {
-    const { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade } = req.body;
-    const propriedade = { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade };
+    const { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade, cliente_id, corretor_id } = req.body;
+    const propriedade = { valor, rua, numero, bairro, cidade, estado, pais, cep, tipo, area_m2, disponibilidade, cliente_id, corretor_id };
 
     connecta.query('INSERT INTO propriedade SET ?', propriedade, (err, result) => {
         if (err) {
