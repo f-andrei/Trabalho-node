@@ -18,10 +18,10 @@
             <div class="col">
                 <form action="venda" method="post">
                     <div>
-                        <label class="form-label" for="propriedade_id">Propriedade</label>
+                        <label class="form-label" for="propriedade_id">propriedade</label>
                         <select class="form-control" name="propriedade_id" id="propriedade_id">
                             <% propriedades.forEach(propriedade => { %>
-                                <option value="<%= propriedade.Id %>">Rua <%= propriedade.rua %>, Nº <%= propriedade.numero %>, <%= propriedade.bairro %> - tipo: <%= propriedade.tipo %> | Cliente: <%= propriedade.nome %> <%= propriedade.sobrenome %></option>
+                                <option value="<%= propriedade.id %>">Rua <%= propriedade.rua %>, Nº <%= propriedade.numero %>, <%= propriedade.bairro %> - tipo: <%= propriedade.tipo %> | Cliente: <%= propriedade.nome %> <%= propriedade.sobrenome %></option>
                             <% }); %>
                         </select>
                     </div>
