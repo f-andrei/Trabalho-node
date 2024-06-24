@@ -88,7 +88,7 @@ app.delete("/propriedade/:id", (req, res) => {
 app.get('/atualizaPropriedade/:id', (req, res) => {
     const propriedadeId = req.params.id;
     
-    connecta.query('SELECT * FROM propriedade WHERE Id = ?', [propriedadeId], (err, result) => {
+    connecta.query('SELECT * FROM propriedade WHERE id = ?', [propriedadeId], (err, result) => {
         if (err) {
             console.error('Erro ao consultar propriedade:', err);
             res.status(500).send('Erro ao consultar propriedade');
@@ -284,7 +284,7 @@ app.put('/propriedade/:id', (req, res) => {
     const propriedadeId = req.params.id;
     const dadosAtualizados = req.body;
 
-    connecta.query('UPDATE propriedade SET ? WHERE Id = ?', [dadosAtualizados, propriedadeId], (err, result) => {
+    connecta.query('UPDATE propriedade SET ? WHERE id = ?', [dadosAtualizados, propriedadeId], (err, result) => {
         if (err) {
             console.error('Erro ao atualizar propriedade:', err);
             res.status(500).send('Erro ao atualizar propriedade');

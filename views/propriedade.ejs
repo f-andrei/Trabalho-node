@@ -16,25 +16,25 @@
                 <ul class="list-group">
                     <% propriedades.forEach(propriedade => { %>
                         <li class="list-group-item">
-                            <strong>Propriedade ID:</strong> <%= propriedade.Id %><br>
-                            <strong>Valor:</strong> <%= propriedade.Valor %><br>
-                            <strong>Rua:</strong> <%= propriedade.Rua %><br>
-                            <strong>Número:</strong> <%= propriedade.Numero %><br>
-                            <strong>Bairro:</strong> <%= propriedade.Bairro %><br>
-                            <strong>Cidade:</strong> <%= propriedade.Cidade %><br>
-                            <strong>Estado:</strong> <%= propriedade.Estado %><br>
-                            <strong>País:</strong> <%= propriedade.Pais %><br>
-                            <strong>CEP:</strong> <%= propriedade.CEP %><br>
-                            <strong>Tipo:</strong> <%= propriedade.Tipo %><br>
-                            <strong>Área (m²):</strong> <%= propriedade.Area_m2 %><br>
-                            <strong>Disponibilidade:</strong> <%= propriedade.Disponibilidade %><br>
+                            <strong>Propriedade ID:</strong> <%= propriedade.id %><br>
+                            <strong>Valor:</strong> <%= propriedade.valor %><br>
+                            <strong>Rua:</strong> <%= propriedade.rua %><br>
+                            <strong>Número:</strong> <%= propriedade.numero %><br>
+                            <strong>Bairro:</strong> <%= propriedade.bairro %><br>
+                            <strong>Cidade:</strong> <%= propriedade.cidade %><br>
+                            <strong>Estado:</strong> <%= propriedade.estado %><br>
+                            <strong>País:</strong> <%= propriedade.pais %><br>
+                            <strong>CEP:</strong> <%= propriedade.cep %><br>
+                            <strong>Tipo:</strong> <%= propriedade.tipo %><br>
+                            <strong>Área (m²):</strong> <%= propriedade.area_m2 %><br>
+                            <strong>Disponibilidade:</strong> <%= propriedade.disponibilidade %><br>
                             
-                            <form id="deleteForm_<%= propriedade.Id %>" class="mt-2">
-                                <button type="button" class="btn btn-danger" onclick="deletaPropriedade('<%= propriedade.Id %>')">Deletar</button>
+                            <form id="deleteForm_<%= propriedade.id %>" class="mt-2">
+                                <button type="button" class="btn btn-danger" onclick="deletaPropriedade('<%= propriedade.id %>')">Deletar</button>
                             </form>
 
-                            <form id="redirectForm_<%= propriedade.Id %>" class="mt-2">
-                                <button type="button" class="btn btn-primary" onclick="redirecionaAtualizacao('<%= propriedade.Id %>')">Atualizar</button>
+                            <form id="redirectForm_<%= propriedade.id %>" class="mt-2">
+                                <button type="button" class="btn btn-primary" onclick="redirecionaAtualizacao('<%= propriedade.id %>')">Atualizar</button>
                             </form>
                         </li>
                     <% }); %>
