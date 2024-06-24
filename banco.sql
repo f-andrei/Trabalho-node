@@ -1,4 +1,3 @@
--- Active: 1719089674359@@localhost@3306@banco
 CREATE DATABASE IF NOT EXISTS banco;
 
 USE banco;
@@ -7,6 +6,7 @@ CREATE TABLE clientes(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     sobrenome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     endereco VARCHAR(255) NOT NULL,
     cidade VARCHAR(255) NOT NULL,
@@ -16,8 +16,8 @@ CREATE TABLE clientes(
 CREATE TABLE propriedade (
     id INT AUTO_INCREMENT PRIMARY KEY,
     valor FLOAT,
-    cliente_ID VARCHAR(255),
-    corretor_Id VARCHAR(255),
+    cliente_id VARCHAR(255),
+    corretor_id VARCHAR(255),
     rua VARCHAR(255),
     numero INT,
     bairro VARCHAR(255),

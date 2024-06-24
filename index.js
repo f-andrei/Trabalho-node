@@ -2,8 +2,6 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const connecta = require('./config/conectaBanco');
-const { error } = require('console');
-
 
 const app = express();
 app.set("view engine","ejs")
@@ -137,8 +135,8 @@ app.put('/propriedade/:id', (req, res) => {
 
 
 app.post('/cadastroCli', (req,res) => {
-    const {nome,sobrenome,email,endereco,cidade, estado,cep} = req.body;
-    const cliente = {nome,sobrenome,email,endereco,cidade, estado,cep};
+    const {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep} = req.body;
+    const cliente = {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep};
     const query = connecta.query("INSERT INTO clientes SET ? ", cliente, (err) => {
         if(err){
             console.error("erro ao inserir na tebela clientes " + err);
@@ -154,7 +152,7 @@ app.delete("/cliente/:id", (req, res) => {
     const cliId = req.params.id;
     const query = connecta.query("DELETE FROM clientes WHERE id = ?", [cliId], (err, result) => {
         if (err) {
-            console.error("Erro ao excluir na tabela clientes " + err);
+            console.error("Erro ao excluir na tabela clientes: " + err);
             res.status(500).send("Erro");
             return;
         }
@@ -163,14 +161,44 @@ app.delete("/cliente/:id", (req, res) => {
             return;
         }
         console.log("Cliente excluído");
-        res.redirect("/cliente");
+        res.status(200).send("Cliente excluído");
     });
 });
 
-app.put("/cliente/:id", (req,res) => {
+app.get("/editarCliente/:id", (req, res) => {
     const cliId = req.params.id;
-    console.log("atualizando cliente com id " + cliId);
-    res.redirect('/cliente');
+    connecta.query("SELECT * FROM clientes WHERE id = ?", [cliId], (err, results) => {
+        if (err) {
+            console.error("Erro na consulta: " + err);
+            res.status(500).render("erro");
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).render("erro");
+            return;
+        }
+        res.status(200).render("editarCliente", { cliente: results[0] });
+    });
+});
+
+app.put("/cliente/:id", (req, res) => {
+    const cliId = req.params.id;
+    const { nome, sobrenome, email, endereco, telefone, cidade, estado, cep } = req.body;
+    const cliente = { nome, sobrenome, email, telefone, endereco, cidade, estado, cep };
+
+    const query = connecta.query("UPDATE clientes SET ? WHERE id = ?", [cliente, cliId], (err, result) => {
+        if (err) {
+            console.error("Erro ao atualizar a tabela clientes: " + err);
+            res.status(500).send("Erro");
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).send("Cliente não encontrado!");
+            return;
+        }
+        console.log("Cliente atualizado");
+        res.status(200).send("Cliente atualizado");
+    });
 });
 
 app.listen(3000, () => {
