@@ -50,8 +50,8 @@
                         <td><%- cliente.email %></td>
                         <td><%- cliente.telefone %></td>
                         <td>
-                            <button class="btn btn-primary" onclick="editarCliente(<%= cliente.id %>)">EDITAR</button>
-                            <button class="btn btn-danger" onclick="deletaCliente(<%= cliente.id %>)">EXCLUIR</button>
+                            <button class="btn btn-primary" onclick="editarCliente('<%= cliente.id %>')">EDITAR</button>
+                            <button class="btn btn-danger" onclick="deletaCliente('<%= cliente.id %>')">EXCLUIR</button>
                         </td>
                     </tr>
                 <% }); %>
