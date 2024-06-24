@@ -6,6 +6,7 @@ CREATE TABLE clientes(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     sobrenome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     endereco VARCHAR(255) NOT NULL,
     cidade VARCHAR(255) NOT NULL,
@@ -19,7 +20,7 @@ CREATE TABLE venda (
     dono_id INTEGER NOT NULL,
     cliente_id INTEGER NOT NULL,
     corretor_id INTEGER NOT NULL,
-    valor DECIMAL(10, 2) NOT NULL,
+    valor FLOAT NOT NULL,
     forma_pagamento VARCHAR(255) NOT NULL,
     qtd_parcelas INTEGER NOT NULL
 );
@@ -31,13 +32,12 @@ CREATE TABLE corretor(
     telefone VARCHAR(30) NOT NULL,
     email VARCHAR(80) NOT NULL,
     localidade VARCHAR(255) NOT NULL
-);
 
-CREATE TABLE Propriedade (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE propriedade (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     valor FLOAT,
-    cliente_ID VARCHAR(255),
-    corretor_Id VARCHAR(255),
+    cliente_id VARCHAR(255),
+    corretor_id VARCHAR(255),
     rua VARCHAR(255),
     numero INT,
     bairro VARCHAR(255),
@@ -49,3 +49,4 @@ CREATE TABLE Propriedade (
     area_m2 FLOAT,
     disponibilidade VARCHAR(255)
 );
+
