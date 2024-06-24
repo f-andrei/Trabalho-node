@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Imoveis</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <%- include('../partials/header') %>
+                <h2>Realizar venda</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form action="venda" method="post">
+                    <div>
+                        <label class="form-label" for="propriedade_id">propriedade</label>
+                        <select class="form-control" name="propriedade_id" id="propriedade_id">
+                            <% propriedades.forEach(propriedade => { %>
+                                <option value="<%= propriedade.id %>">Rua <%= propriedade.rua %>, Nº <%= propriedade.numero %>, <%= propriedade.bairro %> - tipo: <%= propriedade.tipo %> | Cliente: <%= propriedade.nome %> <%= propriedade.sobrenome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="cliente_id">Cliente</label>
+                        <select class="form-control" name="cliente_id" id="cliente_id">
+                            <% clientes.forEach(cliente => { %>
+                                <option value="<%= cliente.id %>"><%= cliente.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="dono_id">Dono</label>
+                        <select class="form-control" name="dono_id" id="dono_id">
+                            <% clientes.forEach(cliente => { %>
+                                <option value="<%= cliente.id %>"><%= cliente.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="corretor_id">Corretor</label>
+                        <select class="form-control" name="corretor_id" id="corretor_id">
+                            <% corretores.forEach(corretor => { %>
+                                <option value="<%= corretor.id %>"><%= corretor.nome %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="valor" >Valor</label>
+                        <input class="form-control" type="number" name="valor" id="valor">
+                    </div>
+                    <div>
+                        <label class="form-label" for="forma_pagamento">Forma de pagamento</label>
+                        <select class="form-control" name="forma_pagamento" id="forma_pagamento">
+                            <option value="a vista">A vista</option>
+                            <option value="financiamento">Financiamento</option>
+                            <option value="parcelamento">Parcelamento</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label" for="qtd_parcelas" >Parcelas</label>
+                        <input class="form-control" type="number" name="qtd_parcelas" id="qtd_parcelas">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary mt-3" type="submit">Realizar venda</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

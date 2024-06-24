@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Imoveis</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <%- include('../partials/header') %>
+                <h2 class="text-center">Vendas</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <div>
+                    <a class="btn btn-primary" href="/criar-venda" role="button">Criar venda</a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div>
+                    <a class="btn btn-primary" href="/listar-vendas" role="button">Listar vendas</a>
+                </div>
+            </div>
+            <div class="col-md-2"></div> 
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</body>
+</html>
