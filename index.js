@@ -47,7 +47,26 @@ app.get('/propriedade', (req, res) => {
 });
 
 app.get('/cadastraPropriedade', (req, res) => {
-    res.status(200).render('cadastraPropriedade');
+    const queryClientes = 'SELECT id, nome, sobrenome FROM cliente';
+    const queryCorretores = 'SELECT id, nome FROM corretor';
+
+    connecta.query(queryClientes, (err, clientes) => {
+        if (err) {
+            console.error('Erro ao buscar clientes:', err);
+            res.status(500).send('Erro ao buscar dados dos clientes no banco de dados.');
+            return;
+        }
+
+        connecta.query(queryCorretores, (err, corretores) => {
+            if (err) {
+                console.error('Erro ao buscar corretores:', err);
+                res.status(500).send('Erro ao buscar dados dos corretores no banco de dados.');
+                return;
+            }
+
+            res.render('cadastraPropriedade', { clientes, corretores });
+        });
+    });
 });
 
 app.post('/cadastraPropriedade', (req, res) => {
