@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS banco;
 
 USE banco;
 
-CREATE TABLE clientes(
+CREATE TABLE cliente(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     sobrenome VARCHAR(255) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE clientes(
     cep VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE venda (
+CREATE TABLE venda(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     propriedade_id INTEGER NOT NULL,
     dono_id INTEGER NOT NULL,
@@ -32,6 +32,7 @@ CREATE TABLE corretor(
     telefone VARCHAR(30) NOT NULL,
     email VARCHAR(80) NOT NULL,
     localidade VARCHAR(255) NOT NULL
+);
 
 CREATE TABLE propriedade (
     id INT AUTO_INCREMENT PRIMARY KEY,
