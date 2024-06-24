@@ -5,9 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Corretor</title>
+
+    <script>
+        function deletaCorretor(corretorId){
+            if(confirm("Confirmar exclusão de Corretor?")){
+                fetch(`/corretor/${corretorId}`, {
+                    method: "DELETE"
+                })
+                .then(response => {
+                    if(response.ok){
+                        alert("Corretor removido com sucesso!");
+                        location.reload();
+                    } else {
+                        alert("Erro ao remover corretor!");
+                        location.reload();
+                    }
+                })
+            }
+        }
+        function editarCorretor(corretorId) {
+        window.location.href = `/editarCorretor/${corretorId}`;
+    }
+    </script>
 </head>
 <body>
     <%- include('partials/header') %>
-    <h1>CORRETOR</h1>
+    <h1 class="text-center">CORRETORES</h1>
+    <div class="col-20 text-center p-3 m-g">
+        <a href="/corretor/cadastraCorretor"><button class="btn btn-primary">Cadastrar Corretor</button></a>
+    </div>
+    <div class="container-fluid">
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>ID</th>
+                    <th>Nome Corretor</th>
+                    <th>CPF</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Localidade</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% corretores.forEach(corretor => { %>
+                    <tr class="text-center">
+                        <td><%- corretor.id %></td>
+                        <td><%- corretor.nome %></td>
+                        <td><%- corretor.cpf %></td>
+                        <td><%- corretor.email %></td>
+                        <td><%- corretor.telefone %></td>
+                        <td><%- corretor.localidade %></td>
+                        <td class="text-center">
+                            <button class="btn btn-primary" onclick="editarCorretor('<%= corretor.id %>')">EDITAR</button>
+                            <button class="btn btn-danger" onclick="deletaCorretor('<%= corretor.id %>')">EXCLUIR</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
