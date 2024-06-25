@@ -28,14 +28,17 @@
 </head>
 <body>
     <%- include("partials/header") %>
-    <div class="container">
-        <h1>Cliente</h1>
+    <div class="container-fluid">
+        <h1 class="text-center">CLIENTE</h1>
+    <div class="col-20 text-center p-3 m-g">
+        <a href="/cadastraCliente"><button class="btn btn-primary">Cadastrar Cliente</button></a>
+    </div>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Nome Cliente</th>
-                    <th>Endereço</th>
                     <th>CPF</th>
+                    <th>Endereço</th>
                     <th>Email</th>
                     <th>Telefone</th>
                     <th>Ação</th>
