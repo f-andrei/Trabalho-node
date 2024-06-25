@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Relatório de Vendas</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <h1 class="text-center">RELATÓRIO DE VENDAS</h1>
+    
+    <div class="container-fluid">
+        <h2 class="text-center">Vendas por Corretor</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>Nome Corretor</th>
+                    <th>Total de Vendas</th>
+                    <th>Valor Total das Vendas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% totalVendas.forEach(venda => { %>
+                    <tr class="text-center">
+                        <td><%- venda.corretor_nome %></td>
+                        <td><%- venda.total_vendas %></td>
+                        <td><%- venda.total_valor_vendas %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <div class="container-fluid">
+        <h2 class="text-center">Vendas por Forma de Pagamento</h2>
+        <table class="table table-striped">
+            <thead class="text-center">
+                <tr class="text-center">
+                    <th>Forma de Pagamento</th>
+                    <th>Total de Vendas</th>
+                    <th>Valor Total das Vendas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% formaPagamento.forEach(pagamento => { %>
+                    <tr class="text-center">
+                        <td><%- pagamento.forma_pagamento %></td>
+                        <td><%- pagamento.total_vendas %></td>
+                        <td><%- pagamento.total_valor %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

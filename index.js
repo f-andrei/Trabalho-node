@@ -508,3 +508,32 @@ app.put("/corretor/:id", (req, res) => {
         res.status(200).send("Corretor atualizado");
     });
 });
+
+app.get('/relatorio', (req, res) => {
+    connecta.query(`SELECT c.nome AS corretor_nome,
+        COUNT(v.id) AS total_vendas, 
+        SUM(v.valor) AS total_valor_vendas
+        FROM venda v 
+        JOIN corretor c 
+        ON v.corretor_id = c.id 
+        GROUP BY c.nome;`, 
+        (err, totalVendas) => {
+            if(err){
+                console.error("Erro: " + err);
+                res.status(500).send("Erro");
+                return;
+            }
+            connecta.query(`SELECT forma_pagamento, 
+                COUNT(*) AS total_vendas, 
+                SUM(valor) AS total_valor
+                FROM venda
+                GROUP BY forma_pagamento;`, (err, formaPagamento) =>{
+                    if(err){
+                        console.error("Erro: " + err);
+                        res.status(500).send("Erro forma pagamento");
+                        return;
+                    }
+                    res.status(200).render('relatorio', {totalVendas, formaPagamento});
+                });
+    });
+});
