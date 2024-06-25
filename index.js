@@ -9,11 +9,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-
 app.get("/", (req, res) => {
     res.status(200).render("home");
 });
-
 
 app.get("/cliente", (req,res) => {
     connecta.query("SELECT * FROM cliente;", (err, results, fields) => {
@@ -22,17 +20,162 @@ app.get("/cliente", (req,res) => {
             res.status(500).render("erro");
             return;
         }
-        res.status(200).render("cliente", {clientes: results});
+        res.status(200).render("cliente/cliente", {clientes: results});
     });
 });
 
-
 app.get("/cadastraCliente", (req,res) => {
-    res.status(200).render("cadastraCliente");
+    res.status(200).render("cliente/cadastraCliente");
 });
 
+app.post('/cadastroCli', (req,res) => {
+    const {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep} = req.body;
+    const cliente = {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep};
+    const query = connecta.query("INSERT INTO cliente SET ? ", cliente, (err) => {
+        if(err){
+            console.error("erro ao inserir na tebela cliente " + err);
+            res.status(500).send("Erro");
+        }
+        console.log("Cliente inserido no banco de dados");
+    })
+    console.log("Cliente inserido no banco de dados");
+    res.status(202).redirect("/cliente");
+});
 
+app.delete("/cliente/:id", (req, res) => {
+    const cliId = req.params.id;
+    const query = connecta.query("DELETE FROM cliente WHERE id = ?", [cliId], (err, result) => {
+        if (err) {
+            console.error("Erro ao excluir na tabela cliente: " + err);
+            res.status(500).send("Erro");
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).send("Cliente não encontrado!");
+            return;
+        }
+        console.log("Cliente excluído");
+        res.status(200).send("Cliente excluído");
+    });
+});
 
+app.get("/editarCliente/:id", (req, res) => {
+    const cliId = req.params.id;
+    connecta.query("SELECT * FROM cliente WHERE id = ?", [cliId], (err, results) => {
+        if (err) {
+            console.error("Erro na consulta: " + err);
+            res.status(500).render("erro");
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).render("erro");
+            return;
+        }
+        res.status(200).render("cliente/editarCliente", { cliente: results[0] });
+    });
+});
+
+app.put("/cliente/:id", (req, res) => {
+    const cliId = req.params.id;
+    const { nome, sobrenome, email, endereco, telefone, cidade, estado, cep } = req.body;
+    const cliente = { nome, sobrenome, email, telefone, endereco, cidade, estado, cep };
+
+    const query = connecta.query("UPDATE cliente SET ? WHERE id = ?", [cliente, cliId], (err, result) => {
+        if (err) {
+            console.error("Erro ao atualizar a tabela cliente: " + err);
+            res.status(500).send("Erro");
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).send("Cliente não encontrado!");
+            return;
+        }
+        console.log("Cliente atualizado");
+        res.status(200).send("Cliente atualizado");
+    });
+});
+
+app.get('/corretor', (req, res) => {
+    connecta.query("SELECT * FROM corretor;", (err, results, fields) => {
+        if(err){
+            console.error("Erro na cosulta" + err);
+            res.status(500).render("erro");
+            return;
+        }
+        res.status(200).render("corretor/corretor", {corretores: results});
+    });
+});
+
+app.get("/corretor/cadastraCorretor", (req,res) => {
+    res.status(200).render("corretor/cadastraCorretor"); 
+});
+
+app.post('/corretor/cadastroCorretor', (req,res) => {
+    let {nome,email, cpf, telefone, localidade} = req.body;
+    let corretor = {nome,email, cpf, telefone, localidade};
+    let query = connecta.query("INSERT INTO corretor SET ? ", corretor, (err) => {
+        if(err){
+            console.error("erro ao inserir na tebela corretor " + err);
+            res.status(500).send("Erro");
+        }
+        console.log("Corretor inserido no banco de dados");
+    })
+    console.log("Corretor inserido no banco de dados");
+    res.status(202).redirect("/corretor");
+});
+
+app.delete("/corretor/:id", (req, res) => {
+    const corretorId = req.params.id;
+    const query = connecta.query("DELETE FROM corretor WHERE id = ?", [corretorId], (err, result) => {
+        if (err) {
+            console.error("Erro ao excluir corretor " + err);
+            res.status(500).send("Erro");
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).send("Corretor não encontrado!");
+            return;
+        }
+        console.log("Corretor excluído");
+        res.status(202).send("Corretor excluída com sucesso");
+    });
+});
+
+app.get("/editarCorretor/:id", (req, res) => {
+    const corretorId = req.params.id;
+    connecta.query("SELECT * FROM corretor WHERE id = ?", [corretorId], (err, results) => {
+        if (err) {
+            console.error("Erro na consulta: " + err);
+            res.status(500).render("erro");
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).render("erro");
+            return;
+        }
+        res.status(200).render("corretor/editarCorretor", { corretor: results[0] });
+    });
+});
+
+app.put("/corretor/:id", (req, res) => {
+    const corretorId = req.params.id;
+    let {nome,email, telefone, localidade} = req.body;
+    let corretor = {nome,email, telefone, localidade};
+
+    const query = connecta.query("UPDATE corretor SET ? WHERE id = ?", [corretor, corretorId], (err, result) => {
+        if (err) {
+            console.error("Erro ao atualizar a tabela corretor: " + err);
+            res.status(500).send("Erro");
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).send("Corretor não encontrado!");
+            return;
+        }
+        console.log("Corretor atualizado");
+        res.status(200).send("Corretor atualizado");
+    });
+});
 //Gustavo - Propriedade
 app.get('/propriedade', (req, res) => {
     connecta.query('SELECT * FROM propriedade', (err, result) => {
@@ -42,7 +185,7 @@ app.get('/propriedade', (req, res) => {
             return;
         }
         
-        res.render('propriedade', { propriedades: result });
+        res.render('propriedade/propriedade', { propriedades: result });
     });
 });
 
@@ -64,7 +207,7 @@ app.get('/cadastraPropriedade', (req, res) => {
                 return;
             }
 
-            res.render('cadastraPropriedade', { clientes, corretores });
+            res.render('propriedade/cadastraPropriedade', { clientes, corretores });
         });
     });
 });
@@ -119,15 +262,34 @@ app.get('/atualizaPropriedade/:id', (req, res) => {
             return;
         }
 
-        res.render('atualizaPropriedade', { propriedade: result[0] });
+        res.render('propriedade/atualizaPropriedade', { propriedade: result[0] });
     });
 });
 
+app.put('/propriedade/:id', (req, res) => {
+    const propriedadeId = req.params.id;
+    const dadosAtualizados = req.body;
+
+    connecta.query('UPDATE propriedade SET ? WHERE id = ?', [dadosAtualizados, propriedadeId], (err, result) => {
+        if (err) {
+            console.error('Erro ao atualizar propriedade:', err);
+            res.status(500).send('Erro ao atualizar propriedade');
+            return;
+        }
+
+        if (result.affectedRows === 0) {
+            res.status(404).send('Propriedade não encontrada');
+            return;
+        }
+
+        console.log('Propriedade atualizada com sucesso');
+        res.status(200).send('Propriedade atualizada com sucesso');
+    });
+});
 
 app.get("/vendas", (req, res) => {
     res.status(200).render("venda/venda");
 });
-
 
 app.get("/criar-venda", (req, res) => {
     connecta.query("SELECT * FROM cliente;", (err, clientesResults) => {
@@ -164,7 +326,6 @@ app.get("/criar-venda", (req, res) => {
         });
     });
 });
-
 
 app.get("/listar-vendas", (req, res) => {
     const query = `
@@ -212,7 +373,6 @@ app.get("/listar-vendas", (req, res) => {
     });
 });
 
-
 app.post("/venda", (req, res) => {
     let {propriedade_id, dono_id, cliente_id, corretor_id, valor, forma_pagamento, qtd_parcelas} = req.body;
     let venda = {propriedade_id, dono_id, cliente_id, corretor_id, valor, forma_pagamento, qtd_parcelas};
@@ -226,7 +386,6 @@ app.post("/venda", (req, res) => {
     });
     res.status(202).redirect("/listar-vendas");
 });
-
 
 app.get("/editar-venda/:id", (req, res) => {
     id = req.params.id;
@@ -299,27 +458,6 @@ app.get("/editar-venda/:id", (req, res) => {
     });
 });
 
-app.put('/propriedade/:id', (req, res) => {
-    const propriedadeId = req.params.id;
-    const dadosAtualizados = req.body;
-
-    connecta.query('UPDATE propriedade SET ? WHERE id = ?', [dadosAtualizados, propriedadeId], (err, result) => {
-        if (err) {
-            console.error('Erro ao atualizar propriedade:', err);
-            res.status(500).send('Erro ao atualizar propriedade');
-            return;
-        }
-
-        if (result.affectedRows === 0) {
-            res.status(404).send('Propriedade não encontrada');
-            return;
-        }
-
-        console.log('Propriedade atualizada com sucesso');
-        res.status(200).send('Propriedade atualizada com sucesso');
-    });
-});
-
 app.put("/edita-venda/:id", (req, res) => {
     let id = req.params.id;
     let { propriedade_id, dono_id, cliente_id, corretor_id, valor, forma_pagamento, qtd_parcelas } = req.body;
@@ -335,7 +473,6 @@ app.put("/edita-venda/:id", (req, res) => {
     });
 });
 
-
 app.delete("/venda/:id", (req, res) => {
     let id = req.params.id;
     connecta.query("DELETE FROM venda WHERE id = ?", [id], (err) => {
@@ -345,167 +482,6 @@ app.delete("/venda/:id", (req, res) => {
         }
         console.log("Venda excluída do banco de dados");
         res.status(202).send("Venda excluída com sucesso");
-    });
-});
-
-
-app.post('/cadastroCli', (req,res) => {
-    const {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep} = req.body;
-    const cliente = {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep};
-    const query = connecta.query("INSERT INTO cliente SET ? ", cliente, (err) => {
-        if(err){
-            console.error("erro ao inserir na tebela cliente " + err);
-            res.status(500).send("Erro");
-        }
-        console.log("Cliente inserido no banco de dados");
-    })
-    console.log("Cliente inserido no banco de dados");
-    res.status(202).redirect("/cliente");
-});
-
-
-app.delete("/cliente/:id", (req, res) => {
-    const cliId = req.params.id;
-    const query = connecta.query("DELETE FROM cliente WHERE id = ?", [cliId], (err, result) => {
-        if (err) {
-            console.error("Erro ao excluir na tabela cliente: " + err);
-            res.status(500).send("Erro");
-            return;
-        }
-        if (result.affectedRows === 0) {
-            res.status(404).send("Cliente não encontrado!");
-            return;
-        }
-        console.log("Cliente excluído");
-        res.status(200).send("Cliente excluído");
-    });
-});
-
-app.get("/editarCliente/:id", (req, res) => {
-    const cliId = req.params.id;
-    connecta.query("SELECT * FROM cliente WHERE id = ?", [cliId], (err, results) => {
-        if (err) {
-            console.error("Erro na consulta: " + err);
-            res.status(500).render("erro");
-            return;
-        }
-        if (results.length === 0) {
-            res.status(404).render("erro");
-            return;
-        }
-        res.status(200).render("editarCliente", { cliente: results[0] });
-    });
-});
-
-  
-app.put("/cliente/:id", (req, res) => {
-    const cliId = req.params.id;
-    const { nome, sobrenome, email, endereco, telefone, cidade, estado, cep } = req.body;
-    const cliente = { nome, sobrenome, email, telefone, endereco, cidade, estado, cep };
-
-    const query = connecta.query("UPDATE cliente SET ? WHERE id = ?", [cliente, cliId], (err, result) => {
-        if (err) {
-            console.error("Erro ao atualizar a tabela cliente: " + err);
-            res.status(500).send("Erro");
-            return;
-        }
-        if (result.affectedRows === 0) {
-            res.status(404).send("Cliente não encontrado!");
-            return;
-        }
-        console.log("Cliente atualizado");
-        res.status(200).send("Cliente atualizado");
-    });
-});
-
-
-app.listen(3000, () => {
-    console.log("Servidor executado na porta 3000");
-});
-
-
-
-app.get('/corretor', (req, res) => {
-    connecta.query("SELECT * FROM corretor;", (err, results, fields) => {
-        if(err){
-            console.error("Erro na cosulta" + err);
-            res.status(500).render("erro");
-            return;
-        }
-        res.status(200).render("corretor", {corretores: results});
-    });
-});
-
-app.get("/corretor/cadastraCorretor", (req,res) => {
-    res.status(200).render("cadastraCorretor"); 
-});
-
-
-app.post('/corretor/cadastroCorretor', (req,res) => {
-    let {nome,email, cpf, telefone, localidade} = req.body;
-    let corretor = {nome,email, cpf, telefone, localidade};
-    let query = connecta.query("INSERT INTO corretor SET ? ", corretor, (err) => {
-        if(err){
-            console.error("erro ao inserir na tebela corretor " + err);
-            res.status(500).send("Erro");
-        }
-        console.log("Corretor inserido no banco de dados");
-    })
-    console.log("Corretor inserido no banco de dados");
-    res.status(202).redirect("/corretor");
-});
-
-
-app.delete("/corretor/:id", (req, res) => {
-    const corretorId = req.params.id;
-    const query = connecta.query("DELETE FROM corretor WHERE id = ?", [corretorId], (err, result) => {
-        if (err) {
-            console.error("Erro ao excluir corretor " + err);
-            res.status(500).send("Erro");
-            return;
-        }
-        if (result.affectedRows === 0) {
-            res.status(404).send("Corretor não encontrado!");
-            return;
-        }
-        console.log("Corretor excluído");
-        res.redirect("/corretor");
-    });
-});
-
-app.get("/editarCorretor/:id", (req, res) => {
-    const corretorId = req.params.id;
-    connecta.query("SELECT * FROM corretor WHERE id = ?", [corretorId], (err, results) => {
-        if (err) {
-            console.error("Erro na consulta: " + err);
-            res.status(500).render("erro");
-            return;
-        }
-        if (results.length === 0) {
-            res.status(404).render("erro");
-            return;
-        }
-        res.status(200).render("editarCorretor", { corretor: results[0] });
-    });
-});
-
-app.put("/corretor/:id", (req, res) => {
-    const corretorId = req.params.id;
-    let {nome,email, telefone, localidade} = req.body;
-    let corretor = {nome,email, telefone, localidade};
-
-    const query = connecta.query("UPDATE corretor SET ? WHERE id = ?", [corretor, corretorId], (err, result) => {
-        if (err) {
-            console.error("Erro ao atualizar a tabela corretor: " + err);
-            res.status(500).send("Erro");
-            return;
-        }
-        if (result.affectedRows === 0) {
-            res.status(404).send("Corretor não encontrado!");
-            return;
-        }
-        console.log("Corretor atualizado");
-        res.status(200).send("Corretor atualizado");
     });
 });
 
@@ -536,4 +512,8 @@ app.get('/relatorio', (req, res) => {
                     res.status(200).render('relatorio', {totalVendas, formaPagamento});
                 });
     });
+});
+
+app.listen(3000, () => {
+    console.log("Servidor executado na porta 3000");
 });
