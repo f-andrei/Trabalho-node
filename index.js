@@ -30,6 +30,24 @@ app.get("/cadastraCliente", (req,res) => {
 
 app.post('/cadastroCli', (req,res) => {
     const {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep} = req.body;
+    if(nome.length < 3){
+        res.status(400).send("Nome com menos de 3 caracteres!");
+    }
+    if(sobrenome.length < 3){
+        res.status(400).send("Sobrenome com menos de 3 caracteres!")
+    }
+    if(cpf.length < 14){
+        res.status(400).send("CPF INVALIDO!");
+    }
+    if(telefone.length < 14){
+        res.status(400).send("TELEFONE INVALIDO! TEM QUE TER MAIS DE 14 CARACTERES (xx)XXXX-XXXX");
+    }
+    if(endereco.length < 3){
+        res.status(400).send("ENDERECO INVALIDO!");
+    }
+    if(cidade.length < 3){
+        res.status(400).send("CIDADE COM MENOS DE 3 CARACTERES!");
+    }
     const cliente = {nome,sobrenome,cpf,email, telefone, endereco,cidade, estado,cep};
     const query = connecta.query("INSERT INTO cliente SET ? ", cliente, (err) => {
         if(err){
@@ -39,7 +57,7 @@ app.post('/cadastroCli', (req,res) => {
         console.log("Cliente inserido no banco de dados");
     })
     console.log("Cliente inserido no banco de dados");
-    res.status(202).redirect("/cliente");
+    res.status(200).redirect("/cliente");
 });
 
 app.delete("/cliente/:id", (req, res) => {
