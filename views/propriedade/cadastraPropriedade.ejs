@@ -17,8 +17,8 @@
                 <form action="/cadastraPropriedade" method="POST">
                     <div class="form-group">
                         <label for="valor">Valor:</label>
-                        <input type="number" class="form-control" id="valor" name="valor" placeholder="Informe o valor" required>
-                    </div>
+                        <input type="number" class="form-control" id="valor" name="valor" placeholder="Informe o valor" min="1000" required>
+                    </div>                    
                     <div class="form-row">
                         <div class="col">
                             <label for="rua">Rua:</label>
@@ -56,7 +56,12 @@
                         </div>
                         <div class="col">
                             <label for="tipo">Tipo:</label>
-                            <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo de propriedade">
+                            <select class="form-control" id="tipo" name="tipo">
+                                <option value="casa">Casa</option>
+                                <option value="apartamento">Apartamento</option>
+                                <option value="comercial">Comercial</option>
+                                <option value="terreno">Terreno</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-row">
@@ -66,8 +71,11 @@
                         </div>
                         <div class="col">
                             <label for="disponibilidade">Disponibilidade:</label>
-                            <input type="text" class="form-control" id="disponibilidade" name="disponibilidade" placeholder="Disponibilidade">
-                        </div>
+                            <select class="form-control" id="disponibilidade" name="disponibilidade">
+                                <option value="disponivel">Disponível</option>
+                                <option value="indisponivel">Indisponível</option>
+                            </select>
+                        </div>                        
                     </div>
                     <div>
                         <label class="form-label" for="cliente_id">Cliente</label>
